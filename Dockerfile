@@ -1,11 +1,29 @@
-FROM ubuntumod3
-MAINTAINER Sean Mikha (smikha@gmail.com) forked from: Doro Wu <fcwu.tw@gmail.com>
+FROM ubuntu
+MAINTAINER Sean Mikha (smikha@gmail.com)
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN sed -i 's#http://archive.ubuntu.com/#http://tw.archive.ubuntu.com/#' /etc/apt/sources.list
 
-# built-in packages
+# Setup environment from scratch
+RUN apt-get update \
+    && apt-get install -y git \
+    && mkdir /root/git ; cd /root/git \
+    && git clone https://github.com/SeanMikha/docker-ubuntu-vnc-desktop-fromscratch \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/root/startup.sh ~ \
+    && chmod 755 /root/startup.sh \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/root/.gtkrc-2.0 /root/ \
+    && apt-get install -y nginx \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/ \
+    && apt-get install -y supervisor \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/ \
+    && mkdir /usr/lib/web \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/usr/lib/web/* /usr/lib/web \
+    && cd /usr/lib/ \
+    && git clone https://github.com/novnc/noVNC \
+    && mv /root/git/docker-ubuntu-vnc-desktop-fromscratch/image/usr/share/* /usr/share/
+
+# Install necessary packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends software-properties-common curl \
     && sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' >> /etc/apt/sources.list.d/arc-theme.list" \

@@ -1,7 +1,8 @@
-**Using multiple Docker containers to run Altcoin wallets within their own isolated environments**
+## **Using multiple Docker containers to run Altcoin wallets within their own isolated environments**
 
-Full article link on Steemit: https://steemit.com/altcoin/@seanmikha/using-multiple-docker-containers-to-run-altcoin-wallets-within-their-own-isolated-environments
-=========================
+### [Full article on SteemIt](https://steemit.com/altcoin/@seanmikha/using-multiple-docker-containers-to-run-altcoin-wallets-within-their-own-isolated-environments)
+
+***
 
 How would you like to have multiple, isolated, Linux desktops in your browser. One per tab. Just like this:
 
